@@ -40,6 +40,7 @@ section {
     font-family: 'Sour Gummy', Arial, sans-serif;
 
 }
+
 /*--------------------------------------------------------*/
 /*               Styles for the Dialog Box                */
 /*--------------------------------------------------------*/
@@ -53,7 +54,7 @@ dialog {
     outline: none;
     border-style: none;
 }
-/* This is what we want for the background when the dialog box opens */
+
 dialog::backdrop {
     background-color: rgba(164, 164, 164, 0.2);
     backdrop-filter: saturate(180%) blur(20px);
@@ -85,6 +86,11 @@ h2 {
     font-weight: bold;
     margin-right: 10px; 
 }
+
+
+/*--------------------------------------------------------*/
+/*          Styles for the Buttons in Dialog              */
+/*--------------------------------------------------------*/
 
 .buttons {
     margin-top: 20px;
@@ -118,10 +124,8 @@ h2 {
 
 .switch {
     position: relative;
-    /* display: inline-block; */
     width: 40px;
     height: 20px;
-    /* top: 38px; */
 }
 
 .switch input {

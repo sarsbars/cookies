@@ -18,7 +18,12 @@ function listen(event, selector, callback) {
 
 
 function setCookie(name, value) {
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + "; path=/";
+  const expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + (15 * 1000)); 
+  const expires = "expires=" + expirationDate.toUTCString();
+
+  document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + "; " +
+      expires + "; path=/; secure; samesite=Lax";
 }
 
 function getCookie(name) {
@@ -47,10 +52,49 @@ function setUserCookies() {
     setCookie("screenHeight", screenHeight);
 }
 
-window.onload = function() {
-    setUserCookies();
-};
+function setUserPreferencesCookies() {
+    if (browserToggle && browserToggle.checked) {
+        setCookie("browser", getBrowser());
+    } else if (browserToggle) {
+        document.cookie = "browser=" +
+            "; path=/" +
+            "; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+            "; secure" +
+            "; samesite=Lax";
+    }
 
+    if (osToggle && osToggle.checked) {
+        setCookie("os", getOS());
+    } else if (osToggle) {
+        document.cookie = "os=" +
+            "; path=/" +
+            "; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+            "; secure" +
+            "; samesite=Lax";
+    }
+
+    if (widthToggle && widthToggle.checked) {
+        setCookie("screenWidth", screen.width);
+    } else if (widthToggle) {
+        document.cookie = "screenWidth=" +
+            "; path=/" +
+            "; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+            "; secure" +
+            "; samesite=Lax";
+    }
+
+    if (heightToggle && heightToggle.checked) {
+        setCookie("screenHeight", screen.height);
+    } else if (heightToggle) {
+        document.cookie = "screenHeight=" +
+            "; path=/" +
+            "; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+            "; secure" +
+            "; samesite=Lax";
+    }
+
+    cookiesDialog.close();
+}
 /*----------------------------------------------------------*/
 /*           Get Browser and Get Operating System           */
 /*       Copied from Final Project in Javascript Basic      */
@@ -104,7 +148,8 @@ const settings = select('.settings-button');
 const save = select('.save-button');
 
 listen('click', accept, () => {
-    cookiesDialog.close();
+  setUserCookies(); 
+  cookiesDialog.close();
 });
 
 listen('click', settings, () => {
@@ -113,11 +158,29 @@ listen('click', settings, () => {
 });
 
 listen('click', save, () => {
-    settingsDialog.close();
+  setUserPreferencesCookies(); 
+  settingsDialog.close();
 });
 
 function openDialog() {
-    cookiesDialog.showModal();
+  if (!getCookie("browser") ||
+      !getCookie("os") ||
+      !getCookie("screenWidth") ||
+      !getCookie("screenHeight")
+  ) {
+      cookiesDialog.showModal();
+  }
 }
 
 setTimeout(openDialog, 2000);
+
+/*----------------------------------------------------------*/
+/*                   Toggle Selectors                       */
+/*----------------------------------------------------------*/
+
+const browserToggle = select('.cookie-one input[type="checkbox"]');
+const osToggle = select('.cookie-two input[type="checkbox"]');
+const widthToggle = select('.cookie-three input[type="checkbox"]');
+const heightToggle = select('.cookie-two:nth-child(4) input[type="checkbox"]'); 
+
+
