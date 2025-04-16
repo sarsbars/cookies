@@ -53,6 +53,21 @@ function setUserCookies() {
 }
 
 function setUserPreferencesCookies() {
+  const browserToggle = select('.cookie-one');
+  const osToggle = select('.cookie-two');
+  const widthToggle = select('.cookie-three');
+  const heightToggle = select('.cookie-four');
+  
+  console.log("browserToggle:", browserToggle);
+  console.log("osToggle:", osToggle);
+  console.log("widthToggle:", widthToggle);
+  console.log("heightToggle:", heightToggle);
+
+  console.log("browserToggle.checked:", browserToggle ? browserToggle.checked : null);
+  console.log("osToggle.checked:", osToggle ? osToggle.checked : null);
+  console.log("widthToggle.checked:", widthToggle ? widthToggle.checked : null);
+  console.log("heightToggle.checked:", heightToggle ? heightToggle.checked : null);
+
     if (browserToggle && browserToggle.checked) {
         setCookie("browser", getBrowser());
     } else if (browserToggle) {
@@ -94,7 +109,7 @@ function setUserPreferencesCookies() {
     }
 
     cookiesDialog.close();
-}
+  }
 /*----------------------------------------------------------*/
 /*           Get Browser and Get Operating System           */
 /*       Copied from Final Project in Javascript Basic      */
@@ -173,14 +188,5 @@ function openDialog() {
 }
 
 setTimeout(openDialog, 2000);
-
-/*----------------------------------------------------------*/
-/*                   Toggle Selectors                       */
-/*----------------------------------------------------------*/
-
-const browserToggle = select('.cookie-one input[type="checkbox"]');
-const osToggle = select('.cookie-two input[type="checkbox"]');
-const widthToggle = select('.cookie-three input[type="checkbox"]');
-const heightToggle = select('.cookie-two:nth-child(4) input[type="checkbox"]'); 
 
 
